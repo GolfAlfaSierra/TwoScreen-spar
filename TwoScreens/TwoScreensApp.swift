@@ -22,7 +22,7 @@ struct TwoScreensApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ApplicationView(selectedLayout: .grid)
+            ApplicationView()
                 .environmentObject(cart)
         }
     }

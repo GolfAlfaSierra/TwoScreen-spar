@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ApplicationView: View {
-    @State var selectedLayout = ItemsLayoutKind.grid
-    var appState = AppState()
+    @State var appState = AppState()
 
     var body: some View {
         NavigationStack {
 
             ScrollView {
-                switch selectedLayout {
+                switch appState.selectedLayout {
                 case .list:
                     LazyVStack(alignment: .center, content: {
                         ForEach(appState.items) { item in
@@ -23,7 +22,7 @@ struct ApplicationView: View {
                         }
 
                     })
-                    .modifier(MakeToolBarModifier(selectedLayout: $selectedLayout))
+                    .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
                 case .grid:
                     let columns = [
                         GridItem(.flexible(minimum: 0, maximum: .infinity)),
@@ -36,7 +35,7 @@ struct ApplicationView: View {
 
                         }
                     }.padding()
-                    .modifier(MakeToolBarModifier(selectedLayout: $selectedLayout))
+                        .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
                 }
 
             }
@@ -45,5 +44,5 @@ struct ApplicationView: View {
 }
 
 #Preview {
-    ApplicationView(selectedLayout: .grid, appState: AppState())
+    ApplicationView()
 }
