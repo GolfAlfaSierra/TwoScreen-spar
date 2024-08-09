@@ -28,7 +28,7 @@ struct ApplicationView: View {
                         }
 
                     })
-                    .modifier(MakeToolBar(selectedLayout: $selectedLayout))
+                    .modifier(MakeToolBarModifier(selectedLayout: $selectedLayout))
                 case .grid:
                     let columns = [
                         GridItem(.flexible(minimum: 0, maximum: .infinity)),
@@ -41,51 +41,11 @@ struct ApplicationView: View {
 
                         }
                     }.padding()
-                    .modifier(MakeToolBar(selectedLayout: $selectedLayout))
+                    .modifier(MakeToolBarModifier(selectedLayout: $selectedLayout))
                 }
 
             }
         }
-    }
-}
-
-struct MakeToolBar: ViewModifier {
-    @Binding var selectedLayout: ItemsLayoutKind
-    func body(content: Content) -> some View {
-        content
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-
-                    switch selectedLayout {
-                    case .list:
-                        Image(.cardListItemIcon)
-                            .padding(10)
-                            .background(.secondary.quinary)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .onTapGesture {
-                                // TODO animation does not work
-                                withAnimation(.easeIn(duration: 1/8)) {
-                                    selectedLayout = .grid
-                                }
-
-                            }
-                    case .grid:
-                        Image(.cardGridItemIcon)
-                            .padding(10)
-                            .background(.secondary.quinary)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .onTapGesture {
-                                withAnimation(.easeIn(duration: 1/8)) {
-                                    selectedLayout = .list
-                                }
-                            }
-
-                    }
-
-                }
-            }
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarBackground(.white, for: .navigationBar)
     }
 }
 

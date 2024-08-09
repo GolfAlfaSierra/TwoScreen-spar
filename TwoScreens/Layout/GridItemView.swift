@@ -45,9 +45,7 @@ struct GridItemView: View {
                     color: viewModel.imageDecoratorType.color)
             }
         }
-
         .clipShape(RoundedRectangle(cornerRadius: 14))
-
         .background(RoundedRectangle(cornerRadius: 14).foregroundStyle(.white).shadow(color: .black.opacity(0.2), radius: 4))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .modifier(ActionListModifier(alignment: .topTrailing, background: .withBackground))
