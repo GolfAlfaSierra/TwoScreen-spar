@@ -57,7 +57,7 @@ enum AmountType: Identifiable, CaseIterable, CustomStringConvertible {
 }
 
 
-enum DisplayLayout {
+enum ItemsLayoutKind {
     case list, grid
 }
 
@@ -75,6 +75,6 @@ struct Cart {
 }
 
 struct ViewModel {
-    var selectedLayout = DisplayLayout.list
+    var selectedLayout = ItemsLayoutKind.list
     var items: [ItemModel] = mockData
 }
