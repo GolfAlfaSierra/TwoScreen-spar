@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct CartView: View {
-    @Binding var isAddedToCart: Bool
     @State var amountType = AmountType.kg
     @State var itemAmount = 0.0
     @EnvironmentObject var cart: Cart
 
-    var viewModel: ItemModel
+    @Binding var viewModel: ItemModel
 
     var body: some View {
-        if isAddedToCart {
+        if viewModel.isAddedToCart {
             Picker("Amount type selection", selection: $amountType) {
                 ForEach(AmountType.allCases) { option in
                     Text(String(describing: option))
@@ -29,7 +28,7 @@ struct CartView: View {
                         // -0.1
                         let shouldCloseCart = cart.removeItem(id: viewModel.id, amount: 0.1)
                         withAnimation {
-                            isAddedToCart = shouldCloseCart
+                            viewModel.isAddedToCart = shouldCloseCart
                             itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
                         }
 
@@ -38,7 +37,7 @@ struct CartView: View {
 
                         let shouldCloseCart = cart.removeItem(id: viewModel.id, amount: 1)
                         withAnimation {
-                            isAddedToCart = shouldCloseCart
+                            viewModel.isAddedToCart = shouldCloseCart
                             itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
                         }
 
@@ -99,7 +98,7 @@ struct CartView: View {
 
                 Button {
                     withAnimation {
-                        isAddedToCart.toggle()
+                        viewModel.isAddedToCart.toggle()
                         cart.addItem(id: viewModel.id, amount: 0.5)
                         itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
                     }

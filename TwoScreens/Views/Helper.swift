@@ -29,6 +29,8 @@ struct ActionListModifier: ViewModifier {
 
     var alignment: Alignment = .center
     var background: ActionListType = .standart
+    
+    @Binding var isFavorite: Bool
 
     func body(content: Content) -> some View {
         content
@@ -38,8 +40,9 @@ struct ActionListModifier: ViewModifier {
                         Image(.orderlistIcon)
                     })
 
-                    Button(action: {}, label: {
-                        Image(.heartIcon)
+                    Button(action: {isFavorite.toggle()}, label: {
+                        if !isFavorite {Image(.heartIcon)} else {Image(.hearticonfill)}
+                        
                     })
 
                 }

@@ -9,12 +9,7 @@ import SwiftUI
 
 struct ApplicationView: View {
     @State var selectedLayout = ItemsLayoutKind.grid
-    var viewModel: ViewModel
-
-    init(selectedLayout: ItemsLayoutKind) {
-        self.selectedLayout = selectedLayout
-        self.viewModel = ViewModel()
-    }
+    var appState = AppState()
 
     var body: some View {
         NavigationStack {
@@ -23,7 +18,7 @@ struct ApplicationView: View {
                 switch selectedLayout {
                 case .list:
                     LazyVStack(alignment: .center, content: {
-                        ForEach(viewModel.items) { item in
+                        ForEach(appState.items) { item in
                             ListItemView(model: item)
                         }
 
@@ -36,7 +31,7 @@ struct ApplicationView: View {
                     ]
 
                     LazyVGrid(columns: columns) {
-                        ForEach(viewModel.items) {item in
+                        ForEach(appState.items) {item in
                             GridItemView(viewModel: item)
 
                         }
@@ -50,5 +45,5 @@ struct ApplicationView: View {
 }
 
 #Preview {
-    ApplicationView(selectedLayout: .grid)
+    ApplicationView(selectedLayout: .grid, appState: AppState())
 }

@@ -15,7 +15,10 @@ struct ItemModel: Identifiable {
     var discountValue = 1
 
     var isStarred = true
-
+    
+    var isAddedToCart = false
+    var isFavorite = false
+    
     var score = 4.5
     var reviewCount = 22
 
@@ -93,7 +96,7 @@ final class Cart: ObservableObject {
     }
 }
 
-struct ViewModel {
+struct AppState {
     var selectedLayout = ItemsLayoutKind.list
     var items: [ItemModel] = mockData
 }

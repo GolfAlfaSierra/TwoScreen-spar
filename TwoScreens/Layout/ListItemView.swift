@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ListItemView: View {
-    var model: ItemModel
+    @State var model: ItemModel
     var body: some View {
         VStack {
             HStack {
-                ListItemImageView(viewModel: model)
-                ListItemContentView(viewModel: model)
+                ListItemImageView(viewModel: $model)
+                ListItemContentView(viewModel: $model)
 
             }.padding(.bottom, 16)
             .padding(.top, 16)
@@ -27,18 +27,12 @@ struct ListItemView: View {
 }
 
 private struct ListItemContentView: View {
-    var viewModel = ItemModel()
-    @State var isAddedToCart = false
-
-    init(viewModel: ItemModel) {
-        self.viewModel = viewModel
-    }
-
+    @Binding var viewModel: ItemModel
     var body: some View {
         VStack {
-            ReviewsView(viewModel: viewModel)
+            ReviewsView(viewModel: $viewModel)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .modifier(ActionListModifier())
+                .modifier(ActionListModifier(isFavorite: $viewModel.isFavorite))
             VStack(alignment: .leading) {
                 Text(viewModel.description)
                     .lineLimit(2)
@@ -56,16 +50,16 @@ private struct ListItemContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            CartView(isAddedToCart: $isAddedToCart, viewModel: viewModel)
+            CartView(viewModel: $viewModel)
 
         }
 
     }
 }
 
-struct ReviewsView: View {
+private struct ReviewsView: View {
 
-    var viewModel: ItemModel
+   @Binding var viewModel: ItemModel
     var body: some View {
         HStack {
             if viewModel.isStarred {
@@ -90,7 +84,7 @@ struct ReviewsView: View {
 }
 
 private struct ListItemImageView: View {
-    var viewModel: ItemModel
+    @Binding var viewModel: ItemModel
     var body: some View {
         viewModel.image
             .overlay(alignment: .topLeading) {
@@ -111,5 +105,5 @@ private struct ListItemImageView: View {
 }
 
 #Preview {
-    return ApplicationView(selectedLayout: .list)
+    return ApplicationView(appState: .init(selectedLayout: .grid))
 }

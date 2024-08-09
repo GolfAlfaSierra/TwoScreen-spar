@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct GridItemView: View {
-    var viewModel: ItemModel
-    @State var isAddedToCart = false
-
+    @State var viewModel: ItemModel
     var body: some View {
         VStack {
 
@@ -33,7 +31,7 @@ struct GridItemView: View {
                 .padding(.trailing, 12)
                 .frame(maxHeight: .infinity)
 
-            CartView(isAddedToCart: $isAddedToCart, viewModel: viewModel) // cartview
+            CartView(viewModel: $viewModel) // cartview
         }
 
         .padding(6)
@@ -48,7 +46,9 @@ struct GridItemView: View {
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .background(RoundedRectangle(cornerRadius: 14).foregroundStyle(.white).shadow(color: .black.opacity(0.2), radius: 4))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .modifier(ActionListModifier(alignment: .topTrailing, background: .withBackground))
+        .modifier(ActionListModifier(alignment: .topTrailing,
+                                     background: .withBackground,
+                                     isFavorite: $viewModel.isFavorite))
 
     }
 }
