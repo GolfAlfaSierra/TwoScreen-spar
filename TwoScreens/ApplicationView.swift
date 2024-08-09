@@ -8,26 +8,42 @@
 import SwiftUI
 
 struct ApplicationView: View {
-    @State var selectedLayout = ItemsLayoutKind.list
+    @State var selectedLayout = ItemsLayoutKind.grid
     var viewModel: ViewModel
-    
-    
-    init(selectedLayout: ItemsLayoutKind = ItemsLayoutKind.list) {
+
+    init(selectedLayout: ItemsLayoutKind) {
         self.selectedLayout = selectedLayout
         self.viewModel = ViewModel()
     }
-    
+
     var body: some View {
         NavigationStack {
-            
+
             ScrollView {
-                LazyVStack(alignment: .center, content: {
-                    ForEach(viewModel.items) { item in
-                        ListItem(model: item)
-                    }
-                    
-                })
-                .modifier(MakeToolBar(selectedLayout: $selectedLayout))
+                switch selectedLayout {
+                case .list:
+                    LazyVStack(alignment: .center, content: {
+                        ForEach(viewModel.items) { item in
+                            ListItemView(model: item)
+                        }
+
+                    })
+                    .modifier(MakeToolBar(selectedLayout: $selectedLayout))
+                case .grid:
+                    let columns = [
+                        GridItem(.flexible(minimum: 0, maximum: .infinity)),
+                        GridItem(.flexible(minimum: 0, maximum: .infinity))
+                    ]
+
+                    LazyVGrid(columns: columns) {
+                        ForEach(viewModel.items) {item in
+                            GridItemView(viewModel: item)
+
+                        }
+                    }.padding()
+                    .modifier(MakeToolBar(selectedLayout: $selectedLayout))
+                }
+
             }
         }
     }
@@ -39,33 +55,33 @@ struct MakeToolBar: ViewModifier {
         content
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    
+
                     switch selectedLayout {
                     case .list:
                         Image(.cardListItemIcon)
                             .padding(10)
                             .background(.secondary.quinary)
-                            .clipShape(RoundedCorner(radius: 12))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                             .onTapGesture {
                                 // TODO animation does not work
                                 withAnimation(.easeIn(duration: 1/8)) {
                                     selectedLayout = .grid
                                 }
-                                
+
                             }
                     case .grid:
                         Image(.cardGridItemIcon)
                             .padding(10)
                             .background(.secondary.quinary)
-                            .clipShape(RoundedCorner(radius: 12))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 1/8)) {
                                     selectedLayout = .list
                                 }
                             }
-                        
+
                     }
-                    
+
                 }
             }
             .toolbarBackground(.visible, for: .navigationBar)
@@ -74,11 +90,5 @@ struct MakeToolBar: ViewModifier {
 }
 
 #Preview {
-    Text("Hello, world!")
-        .modifier(MakeToolBar(selectedLayout: .constant(.list)))
-}
-
-
-#Preview {
-    ApplicationView()
+    ApplicationView(selectedLayout: .grid)
 }

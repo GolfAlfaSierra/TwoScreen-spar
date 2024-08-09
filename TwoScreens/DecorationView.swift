@@ -10,7 +10,7 @@ import SwiftUI
 struct DecorationView: View {
     var decorationText: String
     var color: Color
-    
+
     var body: some View {
         Text(decorationText)
             .foregroundStyle(.white)
@@ -22,9 +22,9 @@ struct DecorationView: View {
             .background(color)
             .lineLimit(1)
             .clipShape(
+
                 RoundedCorner(radius: 25,
                               corners: [.topLeft, .topRight, .bottomRight]))
 
     }
 }
-

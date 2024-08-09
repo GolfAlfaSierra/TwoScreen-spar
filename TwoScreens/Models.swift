@@ -10,15 +10,15 @@ import SwiftUI
 struct ItemModel: Identifiable {
     var id: UUID = UUID()
     var image = Image(.itemPlaceholder)
-    var imageDecoratorText = ""
-    var imageDecoratorType = ItemDecorationType.none
-    var discountValue = 0
-    
+    var imageDecoratorText = "This is decorator!"
+    var imageDecoratorType = ItemDecorationType.calm
+    var discountValue = 1
+
     var isStarred = true
-    
+
     var score = 4.5
     var reviewCount = 22
-    
+
     var description = ""
     var country = ""
     var price = 0.00
@@ -27,24 +27,24 @@ struct ItemModel: Identifiable {
 
 enum ItemDecorationType {
     case none, agressive, neutral, calm
-    
+
     var color: Color {
         switch self {
         case .none:
-                .clear
+            .clear
         case .agressive:
-                .cellLabelDecorationAgressive
+            .cellLabelDecorationAgressive
         case .neutral:
-                .cellLabelDecorationNeutral
+            .cellLabelDecorationNeutral
         case .calm:
-                .cellLabelDecorationCalm
+            .cellLabelDecorationCalm
         }
     }
 }
 
 enum AmountType: Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self {self}
-    
+
     var description: String {
         switch self {
         case .piece:
@@ -56,7 +56,6 @@ enum AmountType: Identifiable, CaseIterable, CustomStringConvertible {
     case  piece, kg
 }
 
-
 enum ItemsLayoutKind {
     case list, grid
 }
@@ -66,11 +65,31 @@ struct CartItem {
     var amount: Double
 }
 
-struct Cart {
+final class Cart: ObservableObject {
     var items = [CartItem]()
     func addItem(id: UUID, amount: Double) {
+        if var item = items.first(where: {$0.itemId == id}) {
+            items.removeAll(where: {$0.itemId == id})
+            item.amount += amount
+            items.append(item)
+            return
+        }
+        items.append(
+            CartItem(itemId: id, amount: amount)
+        )
 
-        
+    }
+    func removeItem(id: UUID, amount: Double) -> Bool {
+        guard  var item = items.first(where: {$0.itemId == id}) else {return false}
+        item.amount -= amount
+        items.removeAll(where: {$0.itemId == item.itemId})
+        items.append(item)
+
+        if item.amount <= 0 {
+            items.removeAll(where: {$0.itemId == item.itemId})
+            return false
+        }
+        return true
     }
 }
 

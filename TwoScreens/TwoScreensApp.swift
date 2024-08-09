@@ -9,18 +9,21 @@ import SwiftUI
 
 @main
 struct TwoScreensApp: App {
+    @StateObject var cart = Cart()
+
     init() {
         UISegmentedControl.appearance().setTitleTextAttributes([
-            .foregroundColor : UIColor.label
+            .foregroundColor: UIColor.label
         ], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([
-            .foregroundColor : UIColor.secondaryLabel
+            .foregroundColor: UIColor.secondaryLabel
         ], for: .normal)
     }
-    
+
     var body: some Scene {
         WindowGroup {
-            ApplicationView()
+            ApplicationView(selectedLayout: .grid)
+                .environmentObject(cart)
         }
     }
 }
