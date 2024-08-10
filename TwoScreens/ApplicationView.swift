@@ -18,7 +18,7 @@ struct ApplicationView: View {
                 case .list:
                     LazyVStack(alignment: .center, content: {
                         ForEach(appState.items) { item in
-                            ListItemView(model: item)
+                            ListItemView(itemModel: item)
                         }
 
                     })

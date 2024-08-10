@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ListItemView: View {
-    @State var model: ItemModel
+    @State var itemModel: ItemModel
     var body: some View {
         VStack {
             HStack {
-                ListItemImageView(viewModel: $model)
-                ListItemContentView(viewModel: $model)
+                ListItemImageView(viewModel: $itemModel)
+                ListItemContentView(viewModel: $itemModel)
 
             }.padding(.bottom, 16)
             .padding(.top, 16)
