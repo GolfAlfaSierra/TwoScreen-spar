@@ -41,7 +41,7 @@ struct ActionListModifier: ViewModifier {
                     })
 
                     Button(action: {isFavorite.toggle()}, label: {
-                        if !isFavorite {Image(.heartIcon)} else {Image(.hearticonfill)}
+                        if !isFavorite {Image(.heartIcon)} else {Image(.heartIconfill)}
 
                     })
 
