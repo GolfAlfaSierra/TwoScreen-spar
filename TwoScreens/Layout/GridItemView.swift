@@ -8,37 +8,40 @@
 import SwiftUI
 
 struct GridItemView: View {
-    @Binding var viewModel: ItemModel
+    @Binding var model: ItemModel
+    
+    private var imageView: some View {
+        model.image
+            .overlay(alignment: .bottomTrailing) {
+                if model.discountValue > 0 {
+                    Text(model.discountValue, format: .percent)
+                        .font(.headline).fontDesign(.rounded)
+                        .foregroundStyle(.discountColorRed)
+                        .padding(.trailing, 5)
+                }
+
+            }
+            .overlay(alignment: .bottomLeading) {
+                HStack(spacing: 2) {if model.isStarred {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                        .font(.system(size: 12))
+                } else {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                        .font(.system(size: 12))
+                        .opacity(0)
+                }
+                Text("\(model.score, specifier: "%.1f")")
+                    .font(.system(size: 14))
+                }
+            }
+    }
+    
     var body: some View {
         VStack {
-
-            viewModel.image
-                .overlay(alignment: .bottomTrailing) {
-                    if viewModel.discountValue > 0 {
-                        Text(viewModel.discountValue, format: .percent)
-                            .font(.headline).fontDesign(.rounded)
-                            .foregroundStyle(.discountColorRed)
-                            .padding(.trailing, 5)
-                    }
-
-                }
-                .overlay(alignment: .bottomLeading) {
-                    HStack(spacing: 2) {if viewModel.isStarred {
-                        Image(systemName: "star.fill")
-                            .foregroundStyle(.yellow)
-                            .font(.system(size: 12))
-                    } else {
-                        Image(systemName: "star.fill")
-                            .foregroundStyle(.yellow)
-                            .font(.system(size: 12))
-                            .opacity(0)
-                    }
-                    Text("\(viewModel.score, specifier: "%.1f")")
-                        .font(.system(size: 14))
-                    }
-                }
-
-            Text(viewModel.description)
+            imageView
+            Text(model.description)
                 .lineLimit(2)
                 .font(.system(size: 12))
                 .foregroundStyle(.secondary)
@@ -46,16 +49,16 @@ struct GridItemView: View {
                 .padding(.trailing, 12)
                 .frame(maxHeight: .infinity)
 
-            AddCartView(viewModel: $viewModel) // cartview
+            AddCartView(viewModel: $model) // cartview
         }
 
         .padding(6)
         .overlay(alignment: .topLeading) {
-            if viewModel.imageDecoratorText != "" ||
-                viewModel.imageDecoratorType != .none {
+            if model.imageDecoratorText != "" ||
+                model.imageDecoratorType != .none {
                 DecorationView(
-                    decorationText: viewModel.imageDecoratorText,
-                    color: viewModel.imageDecoratorType.color)
+                    decorationText: model.imageDecoratorText,
+                    color: model.imageDecoratorType.color)
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -63,12 +66,12 @@ struct GridItemView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .modifier(ActionListModifier(alignment: .topTrailing,
                                      background: .withBackground,
-                                     isFavorite: $viewModel.isFavorite))
+                                     isFavorite: $model.isFavorite))
 
     }
 }
 
 #Preview {
     @State var vm = ItemModel(description: "сыр Ламбер 500/0 230г")
-    return GridItemView(viewModel: $vm).frame(maxWidth: 168, maxHeight: 278)
+    return GridItemView(model: $vm).frame(maxWidth: 168, maxHeight: 278)
 }

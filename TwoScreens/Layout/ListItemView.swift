@@ -8,33 +8,15 @@
 import SwiftUI
 
 struct ListItemView: View {
-    @Binding var itemModel: ItemModel
-    var body: some View {
+    @Binding var model: ItemModel
+    
+    private var contentView: some View {
         VStack {
-            HStack {
-                ListItemImageView(viewModel: $itemModel)
-                ListItemContentView(viewModel: $itemModel)
-
-            }.padding(.bottom, 16)
-            .padding(.top, 16)
-            .padding(.leading, 16)
-            .padding(.trailing, 8)
-
-            Divider()
-
-        }
-    }
-}
-
-private struct ListItemContentView: View {
-    @Binding var viewModel: ItemModel
-    var body: some View {
-        VStack {
-            ReviewsView(viewModel: $viewModel)
+            reviewsView
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .modifier(ActionListModifier(isFavorite: $viewModel.isFavorite))
+                .modifier(ActionListModifier(isFavorite: $model.isFavorite))
             VStack(alignment: .leading) {
-                Text(viewModel.description)
+                Text(model.description)
                     .lineLimit(2)
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
@@ -42,7 +24,7 @@ private struct ListItemContentView: View {
                     .padding(.trailing, 12)
                     .frame(maxHeight: .infinity)
 
-                Text("\(viewModel.country)")
+                Text("\(model.country)")
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary.tertiary)
                 Spacer()
@@ -50,19 +32,14 @@ private struct ListItemContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            AddCartView(viewModel: $viewModel)
+            AddCartView(viewModel: $model)
 
         }
-
     }
-}
-
-private struct ReviewsView: View {
-
-    @Binding var viewModel: ItemModel
-    var body: some View {
+    
+    private var reviewsView: some View {
         HStack {
-            if viewModel.isStarred {
+            if model.isStarred {
                 Image(systemName: "star.fill")
                     .foregroundStyle(.yellow)
                     .font(.system(size: 12))
@@ -72,35 +49,47 @@ private struct ReviewsView: View {
                     .font(.system(size: 12))
                     .opacity(0)
             }
-            Text("\(viewModel.score, specifier: "%.1f")")
+            Text("\(model.score, specifier: "%.1f")")
                 .font(.system(size: 14))
-            Text("| \(viewModel.reviewCount) отзывов")
+            Text("| \(model.reviewCount) отзывов")
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
 
         }
-
     }
-}
-
-private struct ListItemImageView: View {
-    @Binding var viewModel: ItemModel
-    var body: some View {
-        viewModel.image
+    
+    private var imageView: some View {
+        model.image
             .overlay(alignment: .topLeading) {
-                if viewModel.imageDecoratorText != "" || viewModel.imageDecoratorType != .none {
-                    DecorationView(decorationText: viewModel.imageDecoratorText, color: viewModel.imageDecoratorType.color)
+                if model.imageDecoratorText != "" || model.imageDecoratorType != .none {
+                    DecorationView(decorationText: model.imageDecoratorText, color: model.imageDecoratorType.color)
                 }
             }
             .overlay(alignment: .bottomTrailing) {
-                if viewModel.discountValue > 0 {
-                    Text(viewModel.discountValue, format: .percent)
+                if model.discountValue > 0 {
+                    Text(model.discountValue, format: .percent)
                         .font(.headline).fontDesign(.rounded)
                         .foregroundStyle(.discountColorRed)
                         .padding(.trailing, 5)
                 }
 
             }
+    }
+    
+    var body: some View {
+        VStack {
+            HStack {
+                imageView
+                contentView
+
+            }.padding(.bottom, 16)
+            .padding(.top, 16)
+            .padding(.leading, 16)
+            .padding(.trailing, 8)
+
+            Divider()
+
+        }
     }
 }
 

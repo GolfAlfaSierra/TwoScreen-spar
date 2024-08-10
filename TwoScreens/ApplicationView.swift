@@ -19,7 +19,7 @@ struct ApplicationView: View {
                     LazyVStack(alignment: .center, content: {
                         ForEach($appState.items) { item in
 
-                            ListItemView(itemModel: item)
+                            ListItemView(model: item)
                         }
 
                     })
@@ -32,7 +32,7 @@ struct ApplicationView: View {
 
                     LazyVGrid(columns: columns) {
                         ForEach($appState.items) {item in
-                            GridItemView(viewModel: item)
+                            GridItemView(model: item)
 
                         }
                     }.padding()
