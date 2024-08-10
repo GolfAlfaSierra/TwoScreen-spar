@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GridItemView: View {
     @Binding var model: ItemModel
-    
+
     private var imageView: some View {
         model.image
             .overlay(alignment: .bottomTrailing) {
@@ -37,7 +37,7 @@ struct GridItemView: View {
                 }
             }
     }
-    
+
     var body: some View {
         VStack {
             imageView

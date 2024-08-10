@@ -63,7 +63,7 @@ enum ItemsLayoutKind {
     case list, grid
 }
 
-struct CartItem:Identifiable {
+struct CartItem: Identifiable {
     var id: UUID
     var amount: Double
     var descripiton = ""

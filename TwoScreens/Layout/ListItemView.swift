@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListItemView: View {
     @Binding var model: ItemModel
-    
+
     private var contentView: some View {
         VStack {
             reviewsView
@@ -36,7 +36,7 @@ struct ListItemView: View {
 
         }
     }
-    
+
     private var reviewsView: some View {
         HStack {
             if model.isStarred {
@@ -57,7 +57,7 @@ struct ListItemView: View {
 
         }
     }
-    
+
     private var imageView: some View {
         model.image
             .overlay(alignment: .topLeading) {
@@ -75,7 +75,7 @@ struct ListItemView: View {
 
             }
     }
-    
+
     var body: some View {
         VStack {
             HStack {
