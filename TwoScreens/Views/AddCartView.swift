@@ -76,7 +76,7 @@ struct AddCartView: View {
 
             Button {
                 withAnimation {
-                    viewModel.isAddedToCart.toggle()
+                    viewModel.isAddedToCart = true
                     cart.addItem(id: viewModel.id, amount: 0.5)
                     itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
                 }
