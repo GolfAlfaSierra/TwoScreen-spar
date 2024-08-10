@@ -17,7 +17,7 @@
 		6E0BB17B2C65F1E600EFDC2A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0BB17A2C65F1E600EFDC2A /* MockData.swift */; };
 		6E0BB17D2C661DBF00EFDC2A /* DecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0BB17C2C661DBE00EFDC2A /* DecorationView.swift */; };
 		6E0BB17F2C661F1B00EFDC2A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0BB17E2C661F1B00EFDC2A /* Models.swift */; };
-		6E26C6B72C66533B005D0892 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E26C6B62C66533B005D0892 /* CartView.swift */; };
+		6E26C6B72C66533B005D0892 /* AddCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E26C6B62C66533B005D0892 /* AddCartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,7 @@
 		6E0BB17A2C65F1E600EFDC2A /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		6E0BB17C2C661DBE00EFDC2A /* DecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationView.swift; sourceTree = "<group>"; };
 		6E0BB17E2C661F1B00EFDC2A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		6E26C6B62C66533B005D0892 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
+		6E26C6B62C66533B005D0892 /* AddCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

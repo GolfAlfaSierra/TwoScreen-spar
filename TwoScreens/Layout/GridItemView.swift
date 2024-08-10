@@ -46,7 +46,7 @@ struct GridItemView: View {
                 .padding(.trailing, 12)
                 .frame(maxHeight: .infinity)
 
-            CartView(viewModel: $viewModel) // cartview
+            AddCartView(viewModel: $viewModel) // cartview
         }
 
         .padding(6)

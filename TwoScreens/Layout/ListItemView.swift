@@ -50,7 +50,7 @@ private struct ListItemContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            CartView(viewModel: $viewModel)
+            AddCartView(viewModel: $viewModel)
 
         }
 
