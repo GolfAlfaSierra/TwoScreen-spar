@@ -59,7 +59,7 @@ private struct ListItemContentView: View {
 
 private struct ReviewsView: View {
 
-   @Binding var viewModel: ItemModel
+    @Binding var viewModel: ItemModel
     var body: some View {
         HStack {
             if viewModel.isStarred {

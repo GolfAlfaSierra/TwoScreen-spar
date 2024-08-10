@@ -15,10 +15,10 @@ struct ItemModel: Identifiable {
     var discountValue = 1
 
     var isStarred = true
-    
+
     var isAddedToCart = false
     var isFavorite = false
-    
+
     var score = 4.5
     var reviewCount = 22
 

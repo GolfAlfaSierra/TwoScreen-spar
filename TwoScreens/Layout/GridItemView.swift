@@ -33,11 +33,10 @@ struct GridItemView: View {
                             .font(.system(size: 12))
                             .opacity(0)
                     }
-                        Text("\(viewModel.score, specifier: "%.1f")")
-                            .font(.system(size: 14))
+                    Text("\(viewModel.score, specifier: "%.1f")")
+                        .font(.system(size: 14))
                     }
                 }
-            
 
             Text(viewModel.description)
                 .lineLimit(2)

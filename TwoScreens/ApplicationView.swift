@@ -35,7 +35,7 @@ struct ApplicationView: View {
 
                         }
                     }.padding()
-                        .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
+                    .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
                 }
 
             }
