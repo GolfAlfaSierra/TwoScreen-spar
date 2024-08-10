@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GridItemView: View {
-    @State var viewModel: ItemModel
+    @Binding var viewModel: ItemModel
     var body: some View {
         VStack {
 
@@ -69,5 +69,6 @@ struct GridItemView: View {
 }
 
 #Preview {
-    GridItemView(viewModel: ItemModel(description: "сыр Ламбер 500/0 230г")).frame(maxWidth: 168, maxHeight: 278)
+    @State var vm = ItemModel(description: "сыр Ламбер 500/0 230г")
+    return GridItemView(viewModel: $vm).frame(maxWidth: 168, maxHeight: 278)
 }

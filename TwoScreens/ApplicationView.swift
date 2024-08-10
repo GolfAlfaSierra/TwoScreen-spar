@@ -17,7 +17,8 @@ struct ApplicationView: View {
                 switch appState.selectedLayout {
                 case .list:
                     LazyVStack(alignment: .center, content: {
-                        ForEach(appState.items) { item in
+                        ForEach($appState.items) { item in
+
                             ListItemView(itemModel: item)
                         }
 
@@ -30,7 +31,7 @@ struct ApplicationView: View {
                     ]
 
                     LazyVGrid(columns: columns) {
-                        ForEach(appState.items) {item in
+                        ForEach($appState.items) {item in
                             GridItemView(viewModel: item)
 
                         }
