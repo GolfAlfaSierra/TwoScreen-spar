@@ -20,14 +20,14 @@ struct AddCartView: View {
                 let shouldCloseCart = cart.removeItem(id: viewModel.id, amount: 0.1)
                 withAnimation {
                     viewModel.isAddedToCart = shouldCloseCart
-                    itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
+                    itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
                 }
 
             } else {
                 let shouldCloseCart = cart.removeItem(id: viewModel.id, amount: 1)
                 withAnimation {
                     viewModel.isAddedToCart = shouldCloseCart
-                    itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
+                    itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
                 }
 
             }
@@ -45,12 +45,12 @@ struct AddCartView: View {
             if amountType == .kg {
                 cart.addItem(id: viewModel.id, amount: 0.1)
                 withAnimation {
-                    itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
+                    itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
                 }
             } else {
                 cart.addItem(id: viewModel.id, amount: 1)
                 withAnimation {
-                    itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
+                    itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
                 }
 
             }
@@ -78,7 +78,7 @@ struct AddCartView: View {
                 withAnimation {
                     viewModel.isAddedToCart = true
                     cart.addItem(id: viewModel.id, amount: 0.5)
-                    itemAmount = cart.items.first(where: {$0.itemId == viewModel.id})?.amount ?? 0
+                    itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
                 }
             } label: {
                 Image(.cartIcon)

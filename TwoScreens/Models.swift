@@ -63,33 +63,37 @@ enum ItemsLayoutKind {
     case list, grid
 }
 
-struct CartItem {
-    var itemId: UUID
+struct CartItem:Identifiable {
+    var id: UUID
     var amount: Double
+    var descripiton = ""
+    var price = 0
+    var previousPrice = 0
+    var image = Image(.itemPlaceholder)
 }
 
 final class Cart: ObservableObject {
     var items = [CartItem]()
     func addItem(id: UUID, amount: Double) {
-        if var item = items.first(where: {$0.itemId == id}) {
-            items.removeAll(where: {$0.itemId == id})
+        if var item = items.first(where: {$0.id == id}) {
+            items.removeAll(where: {$0.id == id})
             item.amount += amount
             items.append(item)
             return
         }
         items.append(
-            CartItem(itemId: id, amount: amount)
+            CartItem(id: id, amount: amount)
         )
 
     }
     func removeItem(id: UUID, amount: Double) -> Bool {
-        guard  var item = items.first(where: {$0.itemId == id}) else {return false}
+        guard  var item = items.first(where: {$0.id == id}) else {return false}
         item.amount -= amount
-        items.removeAll(where: {$0.itemId == item.itemId})
+        items.removeAll(where: {$0.id == item.id})
         items.append(item)
 
         if item.amount <= 0 {
-            items.removeAll(where: {$0.itemId == item.itemId})
+            items.removeAll(where: {$0.id == item.id})
             return false
         }
         return true
