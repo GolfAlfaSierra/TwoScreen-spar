@@ -94,5 +94,5 @@ struct ListItemView: View {
 }
 
 #Preview {
-    return ApplicationView(appState: .init(selectedLayout: .grid))
+    return ApplicationView()
 }

@@ -10,7 +10,8 @@ import SwiftUI
 @main
 struct TwoScreensApp: App {
     @StateObject var cart = Cart()
-
+    @StateObject var appState = AppState()
+    
     init() {
         UISegmentedControl.appearance().setTitleTextAttributes([
             .foregroundColor: UIColor.label
@@ -24,6 +25,7 @@ struct TwoScreensApp: App {
         WindowGroup {
             ApplicationView()
                 .environmentObject(cart)
+                .environmentObject(appState)
         }
     }
 }

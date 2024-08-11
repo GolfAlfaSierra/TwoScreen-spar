@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ApplicationView: View {
-    @State var appState = AppState()
+    @EnvironmentObject var appState: AppState
 
     var body: some View {
         NavigationStack {

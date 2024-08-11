@@ -54,8 +54,8 @@ struct GridItemView: View {
 
         .padding(6)
         .overlay(alignment: .topLeading) {
-            if model.imageDecoratorText != "" ||
-                model.imageDecoratorType != .none {
+            let showDecoration = model.imageDecoratorText != "" || model.imageDecoratorType != .none
+            if showDecoration {
                 DecorationView(
                     decorationText: model.imageDecoratorText,
                     color: model.imageDecoratorType.color)
