@@ -91,33 +91,38 @@ struct AddCartView: View {
     }
 
     var body: some View {
-        if viewModel.isAddedToCart {
-            Picker("Amount type selection", selection: $amountType) {
-                ForEach(AmountType.allCases) { option in
-                    Text(String(describing: option))
+        
+        Group {
+            if viewModel.isAddedToCart {
+                Picker("Amount type selection", selection: $amountType) {
+                    ForEach(AmountType.allCases) { option in
+                        Text(String(describing: option))
+                    }
+                }.pickerStyle(.segmented)
+                HStack {
+                    minusButton
+                    Spacer()
+                    VStack {
+                        
+                        Text("\(itemAmount, specifier: "%.2f") кг"  )
+                            .foregroundStyle(.white).font(.system(size: 16)).fontDesign(.rounded)
+                        Text("~5,21")
+                            .foregroundStyle(.white).opacity(0.5).font(.system(size: 12)).fontDesign(.rounded)
+                    }
+                    
+                    Spacer()
+                    plusButton
                 }
-            }.pickerStyle(.segmented)
-            HStack {
-                minusButton
-                Spacer()
-                VStack {
-
-                    Text("\(itemAmount, specifier: "%.2f") кг"  )
-                        .foregroundStyle(.white).font(.system(size: 16)).fontDesign(.rounded)
-                    Text("~5,21")
-                        .foregroundStyle(.white).opacity(0.5).font(.system(size: 12)).fontDesign(.rounded)
-                }
-
-                Spacer()
-                plusButton
+                .frame(maxWidth: .infinity)
+                .background(.accent)
+                .clipShape(RoundedCorner(radius: 20))
+            } else {
+                
+                itemCart
+                
             }
-            .frame(maxWidth: .infinity)
-            .background(.accent)
-            .clipShape(RoundedCorner(radius: 20))
-        } else {
-
-            itemCart
-
-        }
+        }.onAppear(perform: {
+            itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0.5
+        })
     }
 }

@@ -100,7 +100,7 @@ final class Cart: ObservableObject {
     }
 }
 
-struct AppState {
-    var selectedLayout = ItemsLayoutKind.list
-    var items: [ItemModel] = mockData
+final class AppState: ObservableObject {
+    @Published var selectedLayout = ItemsLayoutKind.list
+    @Published var items: [ItemModel] = mockData
 }
