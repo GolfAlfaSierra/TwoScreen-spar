@@ -94,5 +94,5 @@ struct ListItemView: View {
 }
 
 #Preview {
-    return ApplicationView()
+    return ApplicationView().environmentObject(AppState()).environmentObject(Cart())
 }

@@ -102,5 +102,5 @@ final class Cart: ObservableObject {
 
 final class AppState: ObservableObject {
     @Published var selectedLayout = ItemsLayoutKind.list
-    @Published var items: [ItemModel] = mockData
+    @Published var storeItems: [ItemModel] = mockData
 }
