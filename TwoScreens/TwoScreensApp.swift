@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+final class AppState: ObservableObject {
+    @Published var selectedLayout = ItemsLayoutKind.list
+    @Published var storeItems: [ItemModel] = mockData
+    @Published var showSheet = false
+}
+
+
 @main
 struct TwoScreensApp: App {
     @StateObject var cart = Cart()

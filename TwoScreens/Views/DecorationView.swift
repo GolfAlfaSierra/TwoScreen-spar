@@ -22,9 +22,7 @@ struct DecorationView: View {
             .background(color)
             .lineLimit(1)
             .clipShape(
-
                 RoundedCorner(radius: 25,
                               corners: [.topLeft, .topRight, .bottomRight]))
-
     }
 }

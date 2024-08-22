@@ -49,7 +49,7 @@ struct ListItemView: View {
                     .font(.system(size: 12))
                     .opacity(0)
             }
-            Text("\(model.score, specifier: "%.1f")")
+            Text("\(model.score)")
                 .font(.system(size: 14))
             Text("| \(model.reviewCount) отзывов")
                 .font(.system(size: 14))
@@ -59,15 +59,15 @@ struct ListItemView: View {
     }
 
     private var imageView: some View {
-        model.image
+        model.image.value
             .overlay(alignment: .topLeading) {
-                if model.imageDecoratorText != "" || model.imageDecoratorType != .none {
-                    DecorationView(decorationText: model.imageDecoratorText, color: model.imageDecoratorType.color)
+                if model.image.imagedecorationText != "" || model.image.imagedecorationType != .none {
+                    DecorationView(decorationText: model.image.imagedecorationText, color: model.image.imagedecorationType.color)
                 }
             }
             .overlay(alignment: .bottomTrailing) {
-                if model.discountValue > 0 {
-                    Text(model.discountValue, format: .percent)
+                if model.image.discountValue > 0 {
+                    Text(model.image.discountValue, format: .percent)
                         .font(.headline).fontDesign(.rounded)
                         .foregroundStyle(.discountColorRed)
                         .padding(.trailing, 5)

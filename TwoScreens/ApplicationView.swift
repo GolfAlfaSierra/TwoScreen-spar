@@ -39,7 +39,27 @@ struct ApplicationView: View {
                     .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
                 }
 
+            }.overlay(alignment: .bottomTrailing) {
+                cartButton            }
+            .sheet(isPresented: $appState.showSheet) {
+                CartListView()
             }
+        }
+    }
+}
+
+
+private extension ApplicationView {
+    var cartButton: some View {
+        Button {
+            appState.showSheet.toggle()
+        } label: {
+            Image(.cartIcon)
+                .scaleEffect(CGSize(width: 1.2, height: 1.2))
+                .padding(8*2.5)
+                .background(.green)
+                .clipShape(Circle())
+                .offset(x: -16)
         }
     }
 }

@@ -9,24 +9,34 @@ import SwiftUI
 
 struct ItemModel: Identifiable {
     var id: UUID = UUID()
-    var image = Image(.itemPlaceholder)
-    var imageDecoratorText = "This is decorator!"
-    var imageDecoratorType = ItemDecorationType.calm
-    var discountValue = 1
-
+    var image = Image()
     var isStarred = true
 
     var isAddedToCart = false
     var isFavorite = false
+    var amountType = AmountType.kg
+    var itemAmount = 0.00
 
-    var score = 4.5
-    var reviewCount = 22
+    var score = 0.00
+    var reviewCount = 0
 
     var description = ""
     var country = ""
+    
     var price = 0.00
     var previousPrice = 0.00
 }
+
+
+extension ItemModel {
+    struct Image {
+        var value = SwiftUI.Image(.itemPlaceholder)
+        var imagedecorationText = "This is decorator!"
+        var imagedecorationType = ItemDecorationType.calm
+        var discountValue = 1
+    }
+}
+
 
 enum ItemDecorationType {
     case none, agressive, neutral, calm
@@ -63,17 +73,10 @@ enum ItemsLayoutKind {
     case list, grid
 }
 
-struct CartItem: Identifiable {
-    var id: UUID
-    var amount: Double
-    var descripiton = ""
-    var price = 0
-    var previousPrice = 0
-    var image = Image(.itemPlaceholder)
-}
 
 final class Cart: ObservableObject {
-    var items = [CartItem]()
+    @Published var items = [CartItem]()
+    
     func addItem(id: UUID, amount: Double) {
         if var item = items.first(where: {$0.id == id}) {
             items.removeAll(where: {$0.id == id})
@@ -81,26 +84,22 @@ final class Cart: ObservableObject {
             items.append(item)
             return
         }
+        
         items.append(
             CartItem(id: id, amount: amount)
         )
 
     }
-    func removeItem(id: UUID, amount: Double) -> Bool {
-        guard  var item = items.first(where: {$0.id == id}) else {return false}
+    func removeItem(id: UUID, amount: Double) {
+        guard  var item = items.first(where: {$0.id == id}) else {return }
         item.amount -= amount
         items.removeAll(where: {$0.id == item.id})
         items.append(item)
 
         if item.amount <= 0 {
             items.removeAll(where: {$0.id == item.id})
-            return false
+            return
         }
-        return true
     }
 }
 
-final class AppState: ObservableObject {
-    @Published var selectedLayout = ItemsLayoutKind.list
-    @Published var storeItems: [ItemModel] = mockData
-}
