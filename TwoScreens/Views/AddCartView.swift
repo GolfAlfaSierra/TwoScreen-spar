@@ -16,11 +16,11 @@ struct AddCartView: View {
             let countText = viewModel.amountType == .kg ? "р/кг" : "шт"
 
             VStack(alignment: .leading) {
-                Text("\(viewModel.price) \(countText)")
+                Text("\(viewModel.price.formatted(.number.precision(.fractionLength(2...)))) \(countText)")
                     .font(.headline)
 
                 if viewModel.previousPrice > 0 {
-                    Text("\(viewModel.previousPrice)")
+                    Text("\(viewModel.previousPrice.formatted(.number.precision(.fractionLength(2...))))")
                         .font(.system(size: 12))
                         .foregroundStyle(.secondary)
                         .strikethrough()
@@ -81,7 +81,7 @@ struct AddCartView: View {
 
         }
         .onChange(of: viewModel.itemAmount) { _, newValue in
-            if newValue <= 0 {
+            if newValue <= 0.1 {
                 viewModel.isAddedToCart = false
             }
         }

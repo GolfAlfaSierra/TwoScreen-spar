@@ -49,7 +49,7 @@ struct ListItemView: View {
                     .font(.system(size: 12))
                     .opacity(0)
             }
-            Text("\(model.score)")
+            Text("\(model.score.formatted(.number.precision(.fractionLength(1...))))")
                 .font(.system(size: 14))
             Text("| \(model.reviewCount) отзывов")
                 .font(.system(size: 14))
