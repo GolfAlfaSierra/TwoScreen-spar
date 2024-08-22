@@ -27,15 +27,17 @@ struct CartListView: View {
 
     var body: some View {
         NavigationStack {
-            LazyVStack(alignment: .center, content: {
-                ForEach($cart.items) { item in
-                    let item = $appState.storeItems.first(where: {$0.id == item.id})!
-
-                    CartItemView(model: item)
-
-                }
-
-            })
+            ScrollView {
+                LazyVStack(alignment: .center, content: {
+                    ForEach($cart.items) { item in
+                        let item = $appState.storeItems.first(where: {$0.id == item.id})!
+                        
+                        CartItemView(model: item)
+                        
+                    }
+                    
+                })
+            }
             .frame(maxHeight: .infinity, alignment: .top)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
