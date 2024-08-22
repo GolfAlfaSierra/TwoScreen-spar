@@ -22,11 +22,10 @@ struct ItemModel: Identifiable {
 
     var description = ""
     var country = ""
-    
+
     var price = 0.00
     var previousPrice = 0.00
 }
-
 
 extension ItemModel {
     struct Image {
@@ -36,7 +35,6 @@ extension ItemModel {
         var discountValue = 1
     }
 }
-
 
 enum ItemDecorationType {
     case none, agressive, neutral, calm
@@ -73,10 +71,9 @@ enum ItemsLayoutKind {
     case list, grid
 }
 
-
 final class Cart: ObservableObject {
     @Published var items = [CartItem]()
-    
+
     func addItem(id: UUID, amount: Double) {
         if var item = items.first(where: {$0.id == id}) {
             items.removeAll(where: {$0.id == id})
@@ -84,7 +81,7 @@ final class Cart: ObservableObject {
             items.append(item)
             return
         }
-        
+
         items.append(
             CartItem(id: id, amount: amount)
         )
@@ -102,4 +99,3 @@ final class Cart: ObservableObject {
         }
     }
 }
-

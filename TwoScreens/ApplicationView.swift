@@ -48,7 +48,6 @@ struct ApplicationView: View {
     }
 }
 
-
 private extension ApplicationView {
     var cartButton: some View {
         Button {

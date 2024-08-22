@@ -9,9 +9,7 @@ import SwiftUI
 
 struct GridItemView: View {
     @Binding var model: ItemModel
-    
-    
-    
+
     var body: some View {
         VStack {
             imageView
@@ -22,10 +20,10 @@ struct GridItemView: View {
                 .padding(2)
                 .padding(.trailing, 12)
                 .frame(maxHeight: .infinity)
-            
+
             AddCartView(viewModel: $model) // cartview
         }
-        
+
         .padding(6)
         .overlay(alignment: .topLeading) {
             let showDecoration = model.image.imagedecorationText != "" || model.image.imagedecorationType != .none
@@ -41,10 +39,9 @@ struct GridItemView: View {
         .modifier(ActionListModifier(alignment: .topTrailing,
                                      background: .withBackground,
                                      isFavorite: $model.isFavorite))
-        
+
     }
 }
-
 
 private extension GridItemView {
     var imageView: some View {
@@ -56,7 +53,7 @@ private extension GridItemView {
                         .foregroundStyle(.discountColorRed)
                         .padding(.trailing, 5)
                 }
-                
+
             }
             .overlay(alignment: .bottomLeading) {
                 HStack(spacing: 2) {if model.isStarred {
@@ -69,8 +66,8 @@ private extension GridItemView {
                         .font(.system(size: 12))
                         .opacity(0)
                 }
-                    Text("\(model.score)")
-                        .font(.system(size: 14))
+                Text("\(model.score)")
+                    .font(.system(size: 14))
                 }
             }
     }
