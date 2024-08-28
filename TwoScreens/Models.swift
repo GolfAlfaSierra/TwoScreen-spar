@@ -11,18 +11,18 @@ struct ItemModel: Identifiable {
     var id: UUID = UUID()
     var image = Image()
     var isStarred = true
-
+    
     var isAddedToCart = false
     var isFavorite = false
     var amountType = AmountType.kg
     var itemAmount = 0.00
-
+    
     var score = 0.00
     var reviewCount = 0
-
+    
     var description = ""
     var country = ""
-
+    
     var price = 0.00
     var previousPrice = 0.00
 }
@@ -38,24 +38,24 @@ extension ItemModel {
 
 enum ItemDecorationType {
     case none, agressive, neutral, calm
-
+    
     var color: Color {
         switch self {
         case .none:
-            .clear
+                .clear
         case .agressive:
-            .cellLabelDecorationAgressive
+                .cellLabelDecorationAgressive
         case .neutral:
-            .cellLabelDecorationNeutral
+                .cellLabelDecorationNeutral
         case .calm:
-            .cellLabelDecorationCalm
+                .cellLabelDecorationCalm
         }
     }
 }
 
 enum AmountType: Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self {self}
-
+    
     var description: String {
         switch self {
         case .piece:
@@ -73,29 +73,47 @@ enum ItemsLayoutKind {
 
 final class Cart: ObservableObject {
     @Published var items = [CartItem]()
-
+    
     func addItem(id: UUID, amount: Double) {
-        if var item = items.first(where: {$0.id == id}) {
-            items.removeAll(where: {$0.id == id})
+        //        if var item = items.first(where: {$0.id == id}) {
+        //            items.removeAll(where: {$0.id == id})
+        //            item.amount += amount
+        //            items.append(item)
+        //            return
+        //        }
+        
+        if let index = items.firstIndex(where: {$0.id == id}) {
+            var item = items[index]
             item.amount += amount
-            items.append(item)
+            items[index] = item
             return
+        } else {
+            items.append(
+                CartItem(id: id, amount: amount)
+            )
         }
-
-        items.append(
-            CartItem(id: id, amount: amount)
-        )
-
+        
     }
     func removeItem(id: UUID, amount: Double) {
-        guard  var item = items.first(where: {$0.id == id}) else {return }
-        item.amount -= amount
-        items.removeAll(where: {$0.id == item.id})
-        items.append(item)
-
-        if item.amount <= 0 {
-            items.removeAll(where: {$0.id == item.id})
-            return
+        
+        if let index = items.firstIndex(where: {$0.id == id}) {
+            var item = items[index]
+            item.amount -= amount
+            items[index] = item
+            if item.amount <= 0.1 {
+                items.remove(at: index)
+            }
         }
+        
+        
+//        guard  var item = items.first(where: {$0.id == id}) else {return }
+//        item.amount -= amount
+//        items.removeAll(where: {$0.id == item.id})
+//        items.append(item)
+//        
+//        if item.amount <= 0 {
+//            items.removeAll(where: {$0.id == item.id})
+//            return
+//        }
     }
 }

@@ -10,17 +10,24 @@ import SwiftUI
 struct AddCartView: View {
     @EnvironmentObject var cart: Cart
     @Binding var viewModel: ItemModel
+    private var previousPrice: String {
+        viewModel.previousPrice.formatted(.number.precision(.fractionLength(2...)))
+    }
+    
+    private var itemAmount: String {
+        viewModel.itemAmount.formatted(.number.precision(.fractionLength(2...)))
+    }
 
     private var itemCart: some View {
         HStack {
             let countText = viewModel.amountType == .kg ? "р/кг" : "шт"
 
             VStack(alignment: .leading) {
-                Text("\(viewModel.price.formatted(.number.precision(.fractionLength(2...)))) \(countText)")
+                Text("\(previousPrice) \(countText)")
                     .font(.headline)
 
                 if viewModel.previousPrice > 0 {
-                    Text("\(viewModel.previousPrice.formatted(.number.precision(.fractionLength(2...))))")
+                    Text("\(previousPrice)")
                         .font(.system(size: 12))
                         .foregroundStyle(.secondary)
                         .strikethrough()
@@ -59,7 +66,7 @@ struct AddCartView: View {
                     VStack {
                         let countText = viewModel.amountType == .kg ? "кг" : "шт"
 
-                        Text("\(viewModel.itemAmount) \(countText)"  )
+                        Text("\(itemAmount) \(countText)"  )
                             .foregroundStyle(.white).font(.system(size: 16)).fontDesign(.rounded)
                         Text("~5,21")
                             .foregroundStyle(.white).opacity(0.5).font(.system(size: 12)).fontDesign(.rounded)
@@ -82,7 +89,10 @@ struct AddCartView: View {
         }
         .onChange(of: viewModel.itemAmount) { _, newValue in
             if newValue <= 0.1 {
-                viewModel.isAddedToCart = false
+                withAnimation {
+                    viewModel.isAddedToCart = false
+                }
+                
             }
         }
     }
