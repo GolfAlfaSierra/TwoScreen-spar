@@ -12,32 +12,12 @@ struct ApplicationView: View {
 
     var body: some View {
         NavigationStack {
-
             ScrollView {
                 switch appState.selectedLayout {
                 case .list:
-                    LazyVStack(alignment: .center, content: {
-                        ForEach($appState.storeItems) { item in
-
-                            ListItemView(model: item)
-                        }
-
-                    })
-                    .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
+                    listLayout
                 case .grid:
-                    let columns = [
-                        GridItem(.flexible(minimum: 0, maximum: .infinity)),
-                        GridItem(.flexible(minimum: 0, maximum: .infinity))
-                    ]
-
-                    LazyVGrid(columns: columns) {
-                        ForEach($appState.storeItems) {item in
-                            GridItemView(model: item)
-
-                        }
-                    }.padding()
-                    .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
-                }
+                    gridLayout                }
 
             }.overlay(alignment: .bottomTrailing) {
                 cartButton            }
@@ -49,6 +29,34 @@ struct ApplicationView: View {
 }
 
 private extension ApplicationView {
+    
+    var gridLayout: some View {
+        let columns = [
+            GridItem(.flexible(minimum: 0, maximum: .infinity)),
+            GridItem(.flexible(minimum: 0, maximum: .infinity))
+        ]
+
+        return LazyVGrid(columns: columns) {
+            ForEach($appState.storeItems) {item in
+                GridItemView(model: item)
+
+            }
+        }.padding()
+        .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
+
+    }
+    
+    var listLayout: some View {
+        LazyVStack(alignment: .center, content: {
+            ForEach($appState.storeItems) { item in
+
+                ListItemView(model: item)
+            }
+
+        })
+        .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
+    }
+    
     var cartButton: some View {
         Button {
             appState.showSheet.toggle()
