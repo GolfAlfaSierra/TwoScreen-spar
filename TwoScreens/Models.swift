@@ -10,21 +10,21 @@ import SwiftUI
 struct ItemModel: Identifiable {
     var id: UUID = UUID()
     var image = Image()
-    var isStarred = true
+//    var isStarred = true
     
     var isAddedToCart = false
     var isFavorite = false
     var amountType = AmountType.kg
-    var itemAmount = 0.00
+    var itemAmount: Decimal = 0.00
     
-    var score = 0.00
-    var reviewCount = 0
+    var score: Decimal = 0.00
+    var reviewCount: Decimal = 0
     
     var description = ""
     var country = ""
     
-    var price = 0.00
-    var previousPrice = 0.00
+    var discountedPrice: Decimal = 0.00
+    var price: Decimal = 0.00
 }
 
 extension ItemModel {
@@ -74,46 +74,23 @@ enum ItemsLayoutKind {
 final class Cart: ObservableObject {
     @Published var items = [CartItem]()
     
-    func addItem(id: UUID, amount: Double) {
-        //        if var item = items.first(where: {$0.id == id}) {
-        //            items.removeAll(where: {$0.id == id})
-        //            item.amount += amount
-        //            items.append(item)
-        //            return
-        //        }
-        
+    func addItem(id: UUID, amount: Decimal) {
         if let index = items.firstIndex(where: {$0.id == id}) {
-            var item = items[index]
-            item.amount += amount
-            items[index] = item
+            items[index].amount += amount
             return
         } else {
             items.append(
                 CartItem(id: id, amount: amount)
             )
         }
-        
     }
-    func removeItem(id: UUID, amount: Double) {
-        
+    func removeItem(id: UUID, amount: Decimal) {
         if let index = items.firstIndex(where: {$0.id == id}) {
-            var item = items[index]
-            item.amount -= amount
-            items[index] = item
-            if item.amount <= 0.1 {
+            items[index].amount -= amount
+            if items[index].amount <= 0 {
                 items.remove(at: index)
             }
         }
         
-        
-//        guard  var item = items.first(where: {$0.id == id}) else {return }
-//        item.amount -= amount
-//        items.removeAll(where: {$0.id == item.id})
-//        items.append(item)
-//        
-//        if item.amount <= 0 {
-//            items.removeAll(where: {$0.id == item.id})
-//            return
-//        }
     }
 }

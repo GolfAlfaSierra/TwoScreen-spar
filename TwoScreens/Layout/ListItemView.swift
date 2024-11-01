@@ -39,7 +39,7 @@ struct ListItemView: View {
 
     private var reviewsView: some View {
         HStack {
-            if model.isStarred {
+            if model.score > 0 {
                 Image(systemName: "star.fill")
                     .foregroundStyle(.yellow)
                     .font(.system(size: 12))
@@ -61,12 +61,14 @@ struct ListItemView: View {
     private var imageView: some View {
         model.image.value
             .overlay(alignment: .topLeading) {
-                if model.image.imagedecorationText != "" || model.image.imagedecorationType != .none {
+                let showDecoration = model.image.imagedecorationText != "" || model.image.imagedecorationType != .none
+                if showDecoration {
                     DecorationView(decorationText: model.image.imagedecorationText, color: model.image.imagedecorationType.color)
                 }
             }
             .overlay(alignment: .bottomTrailing) {
-                if model.image.discountValue > 0 {
+                let hasDiscount = model.image.discountValue > 0
+                if hasDiscount {
                     Text(model.image.discountValue, format: .percent)
                         .font(.headline).fontDesign(.rounded)
                         .foregroundStyle(.discountColorRed)

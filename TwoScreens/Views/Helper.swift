@@ -58,7 +58,7 @@ struct ActionListModifier: ViewModifier {
     }
 }
 
-struct MakeToolBarModifier: ViewModifier {
+struct ToolBarModifier: ViewModifier {
     @Binding var selectedLayout: ItemsLayoutKind
     func body(content: Content) -> some View {
         content
@@ -93,7 +93,6 @@ struct MakeToolBarModifier: ViewModifier {
 
                 }
             }
-            .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(.white, for: .navigationBar)
     }
 }

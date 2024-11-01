@@ -42,7 +42,7 @@ private extension ApplicationView {
 
             }
         }.padding()
-        .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
+        .modifier(ToolBarModifier(selectedLayout: $appState.selectedLayout))
 
     }
     
@@ -54,7 +54,7 @@ private extension ApplicationView {
             }
 
         })
-        .modifier(MakeToolBarModifier(selectedLayout: $appState.selectedLayout))
+        .modifier(ToolBarModifier(selectedLayout: $appState.selectedLayout))
     }
     
     var cartButton: some View {

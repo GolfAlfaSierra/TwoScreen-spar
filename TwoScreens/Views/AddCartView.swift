@@ -11,7 +11,7 @@ struct AddCartView: View {
     @EnvironmentObject var cart: Cart
     @Binding var viewModel: ItemModel
     private var previousPrice: String {
-        viewModel.previousPrice.formatted(.number.precision(.fractionLength(2...)))
+        viewModel.price.formatted(.number.precision(.fractionLength(2...)))
     }
     
     private var itemAmount: String {
@@ -99,6 +99,36 @@ struct AddCartView: View {
 }
 
 private extension AddCartView {
+    private var itemCart: some View {
+        HStack {
+            let countText = viewModel.amountType == .kg ? "р/кг" : "шт"
+            VStack(alignment: .leading) {
+                Text("\(previousPrice) \(countText)")
+                    .font(.headline)
+                if viewModel.price > 0 {
+                    Text("\(previousPrice)")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                        .strikethrough()
+                }
+            }
+            Spacer()
+            Button {
+                withAnimation {
+                    viewModel.isAddedToCart = true
+                    cart.addItem(id: viewModel.id, amount: 0.1)
+                    viewModel.itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
+                }
+            } label: {
+                Image(.cartIcon)
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                    .background(.accent)
+                    .clipShape(Capsule())
+            }
+        }.frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
     var minusButton: some View {
         Button {
             viewModel.amountType == .kg ?

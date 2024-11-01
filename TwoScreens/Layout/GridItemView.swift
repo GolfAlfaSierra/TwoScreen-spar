@@ -56,18 +56,22 @@ private extension GridItemView {
 
             }
             .overlay(alignment: .bottomLeading) {
-                HStack(spacing: 2) {if model.isStarred {
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(.yellow)
-                        .font(.system(size: 12))
-                } else {
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(.yellow)
-                        .font(.system(size: 12))
-                        .opacity(0)
-                }
-                Text("\(model.score)")
-                    .font(.system(size: 14))
+                HStack(spacing: 2) {
+                    if model.score > 0 {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                            .font(.system(size: 12))
+                    } else {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                            .font(.system(size: 12))
+                            .opacity(0)
+                    }
+                    
+                    if model.score > 0 {
+                        Text("\(model.score)")
+                            .font(.system(size: 14))
+                    }
                 }
             }
     }
