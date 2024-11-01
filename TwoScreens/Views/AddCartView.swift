@@ -17,42 +17,8 @@ struct AddCartView: View {
     private var itemAmount: String {
         viewModel.itemAmount.formatted(.number.precision(.fractionLength(2...)))
     }
-
-    private var itemCart: some View {
-        HStack {
-            let countText = viewModel.amountType == .kg ? "р/кг" : "шт"
-
-            VStack(alignment: .leading) {
-                Text("\(previousPrice) \(countText)")
-                    .font(.headline)
-
-                if viewModel.previousPrice > 0 {
-                    Text("\(previousPrice)")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                        .strikethrough()
-                }
-            }
-
-            Spacer()
-            Button {
-                withAnimation {
-                    viewModel.isAddedToCart = true
-                    cart.addItem(id: viewModel.id, amount: 0.5)
-                    viewModel.itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
-                }
-            } label: {
-                Image(.cartIcon)
-                    .padding(.horizontal)
-                    .padding(.vertical, 10)
-                    .background(.accent)
-                    .clipShape(Capsule())
-            }
-        }.frame(maxWidth: .infinity, alignment: .leading)
-    }
-
+    
     var body: some View {
-
         Group {
             if viewModel.isAddedToCart {
                 Picker("Amount type selection", selection: $viewModel.amountType) {
@@ -79,20 +45,16 @@ struct AddCartView: View {
                 .background(.accent)
                 .clipShape(RoundedCorner(radius: 20))
             } else {
-
                 itemCart
-
             }
         }.onAppear {
-            viewModel.itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0.5
-
+            viewModel.itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0.1
         }
         .onChange(of: viewModel.itemAmount) { _, newValue in
-            if newValue <= 0.1 {
+            if newValue <= 0 {
                 withAnimation {
                     viewModel.isAddedToCart = false
                 }
-                
             }
         }
     }
@@ -131,10 +93,10 @@ private extension AddCartView {
     
     var minusButton: some View {
         Button {
+            withAnimation {
             viewModel.amountType == .kg ?
                 cart.removeItem(id: viewModel.id, amount: 0.1) :
                 cart.removeItem(id: viewModel.id, amount: 1)
-            withAnimation {
                 viewModel.itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
             }
 
@@ -149,11 +111,10 @@ private extension AddCartView {
 
     var plusButton: some View {
         Button {
-
+            withAnimation {
             viewModel.amountType == .kg ?
                 cart.addItem(id: viewModel.id, amount: 0.1) :
                 cart.addItem(id: viewModel.id, amount: 1)
-            withAnimation {
                 viewModel.itemAmount = cart.items.first(where: {$0.id == viewModel.id})?.amount ?? 0
             }
         }

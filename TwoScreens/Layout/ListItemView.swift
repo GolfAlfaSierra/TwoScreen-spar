@@ -9,7 +9,25 @@ import SwiftUI
 
 struct ListItemView: View {
     @Binding var model: ItemModel
+    var body: some View {
+        VStack {
+            HStack {
+                imageView
+                contentView
 
+            }
+            .padding(.bottom, 16)
+            .padding(.top, 16)
+            .padding(.leading, 16)
+            .padding(.trailing, 8)
+
+            Divider()
+
+        }
+    }
+}
+
+private extension ListItemView {
     private var contentView: some View {
         VStack {
             reviewsView
@@ -78,21 +96,6 @@ struct ListItemView: View {
             }
     }
 
-    var body: some View {
-        VStack {
-            HStack {
-                imageView
-                contentView
-
-            }.padding(.bottom, 16)
-            .padding(.top, 16)
-            .padding(.leading, 16)
-            .padding(.trailing, 8)
-
-            Divider()
-
-        }
-    }
 }
 
 #Preview {

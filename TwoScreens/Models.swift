@@ -71,19 +71,29 @@ enum ItemsLayoutKind {
     case list, grid
 }
 
+struct CartItem: Identifiable, Equatable {
+    static func == (lhs: CartItem, rhs: CartItem) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    var id: UUID
+    var amount: Decimal
+    var descripiton = ""
+    var price = 0.0
+    var previousPrice = 0.0
+    var image = ItemModel.Image()
+}
+
+
 final class Cart: ObservableObject {
     @Published var items = [CartItem]()
     
     func addItem(id: UUID, amount: Decimal) {
         if let index = items.firstIndex(where: {$0.id == id}) {
             items[index].amount += amount
-            return
-        } else {
-            items.append(
-                CartItem(id: id, amount: amount)
-            )
-        }
+        } else { items.append(CartItem(id: id, amount: amount)) }
     }
+    
     func removeItem(id: UUID, amount: Decimal) {
         if let index = items.firstIndex(where: {$0.id == id}) {
             items[index].amount -= amount
