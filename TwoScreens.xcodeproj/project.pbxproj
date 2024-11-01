@@ -75,7 +75,6 @@
 				6E0BB17A2C65F1E600EFDC2A /* MockData.swift */,
 				6E0BB17E2C661F1B00EFDC2A /* Models.swift */,
 				6E26C6B92C66611A005D0892 /* Views */,
-				6E2154642C688EFC00D8DE73 /* CartListView.swift */,
 			);
 			path = TwoScreens;
 			sourceTree = "<group>";
@@ -93,6 +92,7 @@
 			children = (
 				6E0BB1762C6509A900EFDC2A /* GridItemView.swift */,
 				6E0BB1742C65099C00EFDC2A /* ListItemView.swift */,
+				6E2154642C688EFC00D8DE73 /* CartListView.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";

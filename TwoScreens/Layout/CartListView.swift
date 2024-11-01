@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-struct CartItem: Identifiable, Equatable {
-    static func == (lhs: CartItem, rhs: CartItem) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    var id: UUID
-    var amount: Double
-    var descripiton = ""
-    var price = 0.0
-    var previousPrice = 0.0
-    var image = ItemModel.Image()
-}
-
 struct CartListView: View {
     @EnvironmentObject var cart: Cart
     @EnvironmentObject var appState: AppState
@@ -48,6 +35,8 @@ struct CartListView: View {
                         }
                 }
             }
+            .navigationTitle("Cart items")
+            .navigationBarTitleDisplayMode(.inline)
         }
 
     }
@@ -93,8 +82,5 @@ struct CartItemView: View {
 
     cart.addItem(id: appState.storeItems[0].id, amount: 0)
     cart.addItem(id: appState.storeItems[1].id, amount: 10)
-    //    cart.addItem(id: appState.storeItems[2].id, amount: 5)
-    //    cart.addItem(id: appState.storeItems[3].id, amount: 3)
-
     return CartListView().environmentObject(cart).environmentObject(appState)
 }
