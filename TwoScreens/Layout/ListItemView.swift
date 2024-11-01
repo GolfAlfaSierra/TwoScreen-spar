@@ -96,5 +96,6 @@ struct ListItemView: View {
 }
 
 #Preview {
-    return ApplicationView().environmentObject(AppState()).environmentObject(Cart())
+    @State var vm = ItemModel(description: "сыр Ламбер 500/0 230г")
+    return ListItemView(model: $vm).environmentObject(AppState()).environmentObject(Cart()).frame(maxHeight: 200).border(Color.black)
 }

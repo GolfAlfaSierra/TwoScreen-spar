@@ -78,6 +78,6 @@ private extension GridItemView {
 }
 
 #Preview {
-    @State var vm = ItemModel(description: "сыр Ламбер 500/0 230г")
+    @State var vm = ItemModel(score: 0, description: "сыр Ламбер 500/0 230г")
     return GridItemView(model: $vm).frame(maxWidth: 168, maxHeight: 278).environmentObject(Cart())
 }
